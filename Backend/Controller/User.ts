@@ -75,28 +75,32 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
 
 // Get user profile
 export const getUserProfile = asyncHandler(async (req: AuthRequest, res: Response) => {
-    const { user_id } = req.body;
+    const userID = req.user?.id;
     try {
-        if (!user_id) {
-            res.status(401).json({ id: 0, message: 'Not authorized' });
-        }
-        const user = await UserModel.findById(user_id).select('-password');
-        res.status(200).json(user);
+      if (!userID) {
+        res.status(401).json({ id: 0, message: 'Not authorized' });
+        return;
+      }
+      const user = await UserModel.findById(userID).select('-password');
+      if (!user) {
+        res.status(404).json({ id: 0, message: 'User not found' });
+        return;
+      }
+      res.status(200).json(user);
     } catch (error: any) {
-        res.status(400).json({ id: 0, message: error.message });
+      res.status(400).json({ id: 0, message: error.message });
     }
-
-});
+  });
 
 // Update user profile
 export const updateUserProfile = asyncHandler(async (req: AuthRequest, res: Response) => {
     try {
-      if (!req.user?._id) {
+      if (!req.user?.id) {
         res.status(401);
         throw new Error('Not authorized');
       }
   
-      const user = await UserModel.findById(req.user._id);
+      const user = await UserModel.findById(req.user.id);
   
       if (user) {
         user.name = req.body.name || user.name;
