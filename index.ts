@@ -5,12 +5,9 @@ import userRouter from './Routes/UserRoute.js';
 import cors from 'cors';
 import * as http from "node:http";
 import { ApolloServer } from "@apollo/server";
-import mergedTypeDefs from './typedefs/index.js';
-import mergedResolvers from './resolvers/index.js';
-import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
-import {expressMiddleware} from "@apollo/server/express4";
-
-
+import mergedTypeDefs from "./typedefs";
+import mergedResolvers from "./Resolvers";
+import {ApolloServerPluginDrainHttpServer} from "@apollo/server/plugin/drainHttpServer";
 const app = express();
 
 app.use(cors());
