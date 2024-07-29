@@ -1,5 +1,3 @@
-
-
 const userTypeDef = `#graphql
      type User {
           id : ID!,
@@ -29,6 +27,5 @@ const userTypeDef = `#graphql
            password: String!,
            userType : String!
       }
-`
-
-export default userTypeDef
+`;
+export default userTypeDef;

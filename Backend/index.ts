@@ -1,47 +1,45 @@
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
-import connection from './Config/Database';
-import userRouter from './Routes/UserRoute';
+import connection from './Config/Database.js';
+import userRouter from './Routes/UserRoute.js';
 import cors from 'cors';
 import * as http from "node:http";
 import { ApolloServer } from "@apollo/server";
-import mergedTypeDefs from "./typedefs";
-import mergedResolvers from "./resolvers";
-import {ApolloServerPluginDrainHttpServer} from "@apollo/server/plugin/drainHttpServer";
+import mergedTypeDefs from './typedefs/index.js';
+import mergedResolvers from './resolvers/index.js';
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import {expressMiddleware} from "@apollo/server/express4";
+
+
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
 
+interface MyContext {
+    token?: String;
+}
+
 const httpServer = http.createServer(app);
 
-const server = new ApolloServer({
-        typeDefs : mergedTypeDefs,
-        resolvers : mergedResolvers,
-        plugins : ApolloServerPluginDrainHttpServer({ httpServer })
+const server = new ApolloServer<MyContext>({
+    typeDefs : mergedTypeDefs,
+    resolvers : mergedResolvers,
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
     await server.start();
 
 
 app.use(
     "/graphql",
-    cors({
-        origin: "http://localhost:3000",
-        credentials: true,
+    cors(),
+    express.json(),
+    expressMiddleware(server, {
+        context: async ({ req }) => ({ token: req.headers.token }),
     }),
-    express.json()
 );
 
-await new Promise((resolve) => httpServer.listen({ port: 3000 }, resolve));
+await new Promise<void>((resolve) => httpServer.listen({ port: 4000 }, resolve));
 await connection
 
-
-app.listen(3000, async() => {
-    try {
-
-        console.log('Database connected');
-    } catch (error) {
-        console.log('Error connecting to database');
-    }
-    console.log('Server is running on port 3000');
-})
+console.log("graph ql server up and running at port 4000")
