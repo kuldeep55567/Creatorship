@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import { z } from 'zod';
 import { generateToken } from '../Utils';
 import { UserModel, IUser, UserSchema } from '../Model/UserModel';
+import {RegisterUserSchema} from "../validation/UserValidation";
 
 dotenv.config();
 
@@ -13,13 +14,6 @@ interface AuthRequest extends Request {
     user?: IUser;
 }
 
-// Zod schemas for input validation
-const RegisterUserSchema = UserSchema.pick({
-    name: true,
-    email: true,
-    password: true,
-    userType: true
-});
 
 const LoginUserSchema = z.object({
     email: z.string().email(),

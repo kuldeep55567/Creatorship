@@ -3,19 +3,42 @@ import bodyParser from 'body-parser';
 import connection from './Config/Database';
 import userRouter from './Routes/UserRoute';
 import cors from 'cors';
+import * as http from "node:http";
+import { ApolloServer } from "@apollo/server";
+import mergedTypeDefs from "./typedefs";
+import mergedResolvers from "./resolvers";
+import {ApolloServerPluginDrainHttpServer} from "@apollo/server/plugin/drainHttpServer";
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('Hello World');
-})
+const httpServer = http.createServer(app);
 
-app.use('/user', userRouter);
+const server = new ApolloServer({
+        typeDefs : mergedTypeDefs,
+        resolvers : mergedResolvers,
+        plugins : ApolloServerPluginDrainHttpServer({ httpServer })
+});
+    await server.start();
+
+
+app.use(
+    "/graphql",
+    cors({
+        origin: "http://localhost:3000",
+        credentials: true,
+    }),
+    express.json()
+);
+
+await new Promise((resolve) => httpServer.listen({ port: 3000 }, resolve));
+await connection
+
+
 app.listen(3000, async() => {
     try {
-        await connection;
+
         console.log('Database connected');
     } catch (error) {
         console.log('Error connecting to database');
