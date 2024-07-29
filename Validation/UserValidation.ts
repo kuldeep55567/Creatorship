@@ -1,6 +1,6 @@
 
 // Zod schemas for input validation
-import {UserSchema} from "../Model/UserModel";
+import {UserSchema} from "../Model/UserModel.js";
 
 
 

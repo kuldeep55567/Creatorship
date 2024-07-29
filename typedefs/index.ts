@@ -1,4 +1,5 @@
 import { mergeTypeDefs } from "@graphql-tools/merge";
+import userTypeDef from "./userTypeDef.js";
 
 
 
