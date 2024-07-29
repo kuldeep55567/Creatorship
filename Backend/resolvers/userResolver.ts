@@ -1,5 +1,5 @@
-import {RegisterUserSchema} from "../validation/UserValidation";
-import {UserModel} from "../Model/UserModel";
+import {RegisterUserSchema} from "../validation/UserValidation.js";
+import {UserModel} from "../Model/UserModel.js";
 import bcrypt from "bcrypt";
 import exp from "node:constants";
 

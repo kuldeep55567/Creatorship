@@ -1,0 +1,39 @@
+import { RegisterUserSchema } from "../validation/UserValidation.js";
+import { UserModel } from "../Model/UserModel.js";
+import bcrypt from "bcrypt";
+const userResolver = {
+    Mutation: {
+        register: async (args) => {
+            try {
+                const { name, email, password, userType } = RegisterUserSchema.parse({
+                    name: args.name,
+                    email: args.email,
+                    password: args.password,
+                    userType: args.userType,
+                });
+                const userExists = await UserModel.findOne({ email });
+                if (userExists) {
+                    throw new Error("User already exists");
+                }
+                const hashedPassword = await bcrypt.hash(password, 10);
+                const user = await UserModel.create({
+                    name,
+                    email,
+                    password: hashedPassword,
+                    userType,
+                });
+                if (user) {
+                    console.log("User Account Created successfully");
+                    return user;
+                }
+                else {
+                    throw new Error("Invalid User Data");
+                }
+            }
+            catch (error) {
+            }
+        }
+    },
+    Query: {}
+};
+export default userResolver;
