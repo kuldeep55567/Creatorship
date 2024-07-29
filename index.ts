@@ -6,7 +6,7 @@ import cors from 'cors';
 import * as http from "node:http";
 import { ApolloServer } from "@apollo/server";
 import mergedTypeDefs from "./typedefs";
-import mergedResolvers from "./resolvers";
+import mergedResolvers from "./Resolvers";
 import {ApolloServerPluginDrainHttpServer} from "@apollo/server/plugin/drainHttpServer";
 const app = express();
 

@@ -1,4 +1,4 @@
-import {RegisterUserSchema} from "../validation/UserValidation";
+import {RegisterUserSchema} from "../Validation/UserValidation";
 import {UserModel} from "../Model/UserModel";
 import bcrypt from "bcrypt";
 import exp from "node:constants";

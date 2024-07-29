@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import { z } from 'zod';
 import { generateToken } from '../Utils';
 import { UserModel, IUser, UserSchema } from '../Model/UserModel';
-import {RegisterUserSchema} from "../validation/UserValidation";
+import {RegisterUserSchema} from "../Validation/UserValidation";
 
 dotenv.config();
 
