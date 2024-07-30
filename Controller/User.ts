@@ -3,15 +3,9 @@ import asyncHandler from 'express-async-handler';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import { z } from 'zod';
-<<<<<<< HEAD:Controller/User.ts
-import { generateToken } from '../Utils';
-import { UserModel, IUser, UserSchema } from '../Model/UserModel';
-import {RegisterUserSchema} from "../Validation/UserValidation";
-=======
 import { generateToken } from '../Utils/index.js';
 import { UserModel, IUser, UserSchema } from '../Model/UserModel.js';
-import {RegisterUserSchema} from "../validation/UserValidation.js";
->>>>>>> b97183338690310fa6bfb2a817a0b62a2ccb099a:Backend/Controller/User.ts
+import {RegisterUserSchema} from "../Validation/UserValidation.js";
 
 dotenv.config();
 

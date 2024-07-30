@@ -1,10 +1,5 @@
-<<<<<<< HEAD:Resolvers/userResolver.ts
-import {RegisterUserSchema} from "../Validation/UserValidation";
-import {UserModel} from "../Model/UserModel";
-=======
-import {RegisterUserSchema} from "../validation/UserValidation.js";
+import {RegisterUserSchema} from "../Validation/UserValidation.js";
 import {UserModel} from "../Model/UserModel.js";
->>>>>>> b97183338690310fa6bfb2a817a0b62a2ccb099a:Backend/resolvers/userResolver.ts
 import bcrypt from "bcrypt";
 import exp from "node:constants";
 

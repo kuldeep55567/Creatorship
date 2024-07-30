@@ -5,9 +5,10 @@ import userRouter from './Routes/UserRoute.js';
 import cors from 'cors';
 import * as http from "node:http";
 import { ApolloServer } from "@apollo/server";
-import mergedTypeDefs from "./typedefs";
-import mergedResolvers from "./Resolvers";
+import mergedTypeDefs from "./typedefs/index.js";
+import mergedResolvers from "./Resolvers/index.js";
 import {ApolloServerPluginDrainHttpServer} from "@apollo/server/plugin/drainHttpServer";
+import {expressMiddleware} from "@apollo/server/express4";
 const app = express();
 
 app.use(cors());
@@ -36,7 +37,7 @@ app.use(
     }),
 );
 
-await new Promise<void>((resolve) => httpServer.listen({ port: 4000 }, resolve));
-await connection
+// await new Promise<void>((resolve) => httpServer.listen({ port: 4000 }, resolve));
+// await connection
 
 console.log("graph ql server up and running at port 4000")
